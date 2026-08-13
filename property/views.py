@@ -1,6 +1,5 @@
 from django.shortcuts import render
 
-
 from property.models import Flat
 
 
