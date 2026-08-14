@@ -10,7 +10,7 @@ class OwnerInline(admin.TabularInline):
 
 
 class FlatAdmin(admin.ModelAdmin):
-    search_fields = ('town', 'address', 'flat_owners__owner',)
+    search_fields = ('town', 'address', 'owners__full_name',)
     readonly_fields = ('created_at',)
     inlines = [OwnerInline]
     list_display = (
@@ -27,16 +27,16 @@ class FlatAdmin(admin.ModelAdmin):
 
     @admin.display(description='Собственники')
     def get_owners(self, obj):
-        return ', '.join(owner.owner for owner in obj.flat_owners.all())
+        return ', '.join(owner.full_name for owner in obj.owners.all())
 
 
 class ComplaintAdmin(admin.ModelAdmin):
-    raw_id_fields = ('user', 'flat',)
+    raw_id_fields = ('complainant', 'flat',)
 
 
 class OwnerAdmin(admin.ModelAdmin):
     raw_id_fields = ('flats',)
-    list_display = ('owner', 'owner_pure_phone')
+    list_display = ('full_name', 'pure_phone')
 
 
 admin.site.register(Flat, FlatAdmin)
